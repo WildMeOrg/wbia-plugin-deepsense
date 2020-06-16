@@ -97,6 +97,8 @@ def _deepsense_container_selector(ibs, aid):
     container_name = 'flukebook_deepsense'
     if species == 'eubalaena_australis':
         container_name = 'deepsense_SRW_v1'
+    elif species == 'eubalaena_glacialis':
+        container_name = 'flukebook_deepsense'
     return container_name
 
 
