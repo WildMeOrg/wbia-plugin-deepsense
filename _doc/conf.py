@@ -25,7 +25,9 @@ modindex_common_prefix = ['_']
 master_doc = 'index'
 
 html_theme = 'sphinx_rtd_theme'
-html_theme_path = ['_themes', ]
+html_theme_path = [
+    '_themes',
+]
 
 # -- Project information -----------------------------------------------------
 
