@@ -8,7 +8,7 @@ os.environ['IBIES_PARSE_ARGS'] = 'OFF'
 os.environ['UTOOL_AUTOGEN_SPHINX_RUNNING'] = 'ON'
 
 # sys.path.append('~/code/ibeis_deepsense')
-sys.path.append(os.path.abspath("../"))
+sys.path.append(os.path.abspath('../'))
 
 autosummary_generate = True
 
@@ -23,8 +23,8 @@ modindex_common_prefix = ['_']
 
 master_doc = 'index'
 
-html_theme = "sphinx_rtd_theme"
-html_theme_path = ["_themes", ]
+html_theme = 'sphinx_rtd_theme'
+html_theme_path = ['_themes', ]
 
 # -- Project information -----------------------------------------------------
 

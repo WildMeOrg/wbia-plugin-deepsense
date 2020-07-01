@@ -317,8 +317,8 @@ def get_b64_image(ibs, aid, training_config=False, **kwargs):
         image_path = deepsense_annot_training_chip_fpath(ibs, aid)
     pil_image = Image.open(image_path)
     byte_buffer = BytesIO()
-    pil_image.save(byte_buffer, format="JPEG")
-    b64_image = base64.b64encode(byte_buffer.getvalue()).decode("utf-8")
+    pil_image.save(byte_buffer, format='JPEG')
+    b64_image = base64.b64encode(byte_buffer.getvalue()).decode('utf-8')
     return b64_image
 
 
@@ -559,11 +559,11 @@ def ibeis_plugin_deepsense_illustration(ibs, annot_uuid, output=False, config={}
 
     blowhead = (keypoints['keypoints']['blowhead']['x'], keypoints['keypoints']['blowhead']['y'])
     blowhead_btm, blowhead_top = bounding_box_at_centerpoint(blowhead)
-    draw.ellipse( (blowhead_btm, blowhead_top), outline="green", width=5)
+    draw.ellipse( (blowhead_btm, blowhead_top), outline='green', width=5)
 
     bonnet = (keypoints['keypoints']['bonnet']['x'], keypoints['keypoints']['bonnet']['y'])
     bonnet_btm, bonnet_top = bounding_box_at_centerpoint(bonnet)
-    draw.ellipse( (bonnet_btm, bonnet_top), outline="blue", width=5)
+    draw.ellipse( (bonnet_btm, bonnet_top), outline='blue', width=5)
 
     if output:
         local_path = dirname(abspath(__file__))
@@ -589,7 +589,7 @@ def ibeis_plugin_deepsense_passport(ibs, annot_uuid, output=False, config={}, **
     # add padding on all sides of the image to prevent cutoff
     orig_size_np = np.array(pil_img.size)
     new_size = tuple(orig_size_np * 3)
-    canvas = Image.new("RGB", new_size)
+    canvas = Image.new('RGB', new_size)
     canvas.paste(pil_img, pil_img.size)
 
     # get new coords of the blowhead and bonnet to use for rotation
@@ -1369,17 +1369,17 @@ def deepsense_illustrate_metadata(ibs, species, limit=10, imgdir='/home/wildme/c
 
 def illustrate_metadata_helper(row, i, imgdir):
     pil_img = Image.open(row['Image'])
-    canvas = Image.new("RGB", pil_img.size)
+    canvas = Image.new('RGB', pil_img.size)
     canvas.paste(pil_img)
     draw = ImageDraw.Draw(canvas)
 
     blowhead_point  = (int(row['blowhead_x']), int(row['blowhead_y']))
     blowhead_coords = bounding_box_at_centerpoint(blowhead_point)
-    draw.ellipse(blowhead_coords, outline="green", width=2)
+    draw.ellipse(blowhead_coords, outline='green', width=2)
 
     bonnet_point  = (int(row['bonnet_x']), int(row['bonnet_y']))
     bonnet_coords = bounding_box_at_centerpoint(bonnet_point)
-    draw.ellipse(bonnet_coords, outline="red", width=2)
+    draw.ellipse(bonnet_coords, outline='red', width=2)
 
     ut.ensuredir(imgdir)
     output_filepath = join(imgdir, (str(i) + '.jpg'))
