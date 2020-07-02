@@ -42,7 +42,12 @@ CONTAINER_ASSET_MAP = {
         'backend_url': None,
         'individual_map_fpath': 'https://wildbookiarepository.azureedge.net/random/deepsense.australis.v1.csv',
         'id_map': None,
-    }
+    },
+    'original_deepsense': {
+        'backend_url': None,
+        'individual_map_fpath': 'https://wildbookiarepository.azureedge.net/random/deepsense.flukebook.v0.csv',
+        'id_map': None,
+    },
 }
 
 
@@ -89,12 +94,13 @@ docker_control.docker_register_config(None, 'flukebook_deepsense', 'wildme.azure
 docker_control.docker_register_config(None, 'flukebook_deepsense2', 'wildme.azurecr.io/ibeis/deepsense:app2', run_args={'_internal_port': 5000, '_external_suggested_port': 5000}, container_check_func=_ibeis_plugin_deepsense_check_container)
 docker_control.docker_register_config(None, 'flukebook_deepsense5', 'wildme.azurecr.io/ibeis/deepsense:app5', run_args={'_internal_port': 5000, '_external_suggested_port': 5000}, container_check_func=_ibeis_plugin_deepsense_check_container)
 docker_control.docker_register_config(None, 'deepsense_SRW_v1', 'wildme.azurecr.io/ibeis/deepsense-srw:latest', run_args={'_internal_port': 5000, '_external_suggested_port': 5000}, container_check_func=_ibeis_plugin_deepsense_check_container)
+docker_control.docker_register_config(None, 'original_deepsense', 'wildme.azurecr.io/ibeis/deepsense-original:latest', run_args={'_internal_port': 5000, '_external_suggested_port': 5000}, container_check_func=_ibeis_plugin_deepsense_check_container)
 
 
 # This might need to be updated as part of extending the plugin in the future
 def _deepsense_container_selector(ibs, aid):
     species = ibs.get_annot_species(aid)
-    container_name = 'flukebook_deepsense'
+    container_name = 'original_deepsense'
     if species == 'eubalaena_australis':
         container_name = 'deepsense_SRW_v1'
     return container_name
