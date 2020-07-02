@@ -42,7 +42,12 @@ CONTAINER_ASSET_MAP = {
         'backend_url': None,
         'individual_map_fpath': 'https://wildbookiarepository.azureedge.net/random/deepsense.australis.v1.csv',
         'id_map': None,
-    }
+    },
+    'original_deepsense': {
+        'backend_url': None,
+        'individual_map_fpath': 'https://wildbookiarepository.azureedge.net/random/deepsense.flukebook.v0.csv',
+        'id_map': None,
+    },
 }
 
 
