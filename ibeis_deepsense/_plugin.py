@@ -123,11 +123,11 @@ docker_control.docker_register_config(
     container_check_func=_ibeis_plugin_deepsense_check_container,
 )
 docker_control.docker_register_config(
-    None, 
-    'original_deepsense', 
-    'wildme.azurecr.io/ibeis/deepsense-original:latest', 
-    run_args={'_internal_port': 5000, '_external_suggested_port': 5000}, 
-    container_check_func=_ibeis_plugin_deepsense_check_container
+    None,
+    'original_deepsense',
+    'wildme.azurecr.io/ibeis/deepsense-original:latest',
+    run_args={'_internal_port': 5000, '_external_suggested_port': 5000},
+    container_check_func=_ibeis_plugin_deepsense_check_container,
 )
 
 
