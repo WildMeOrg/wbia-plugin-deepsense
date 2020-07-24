@@ -1,4 +1,4 @@
-.. ibeis_deepsense documentation master file, created by
+.. wbia_deepsense documentation master file, created by
    sphinx-quickstart on Wed Aug 15 11:40:25 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -10,7 +10,7 @@ Welcome to IBEIS Deepsense Plug-in documentation!
    :maxdepth: 8
    :caption: Contents:
 
-   ibeis_deepsense
+   wbia_deepsense
 
 
 Indices and tables

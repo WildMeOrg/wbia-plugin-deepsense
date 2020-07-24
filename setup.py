@@ -45,7 +45,7 @@ MINOR = 1
 MICRO = 0
 SUFFIX = 'dev0'
 VERSION = '%d.%d.%d.%s' % (MAJOR, MINOR, MICRO, SUFFIX)
-PACKAGES = ['ibeis_deepsense']
+PACKAGES = ['wbia_deepsense']
 
 
 def git_version():
@@ -75,7 +75,7 @@ def git_version():
     return git_revision
 
 
-def write_version_py(filename=os.path.join('ibeis_deepsense', 'version.py')):
+def write_version_py(filename=os.path.join('wbia_deepsense', 'version.py')):
     cnt = """
 # THIS FILE IS GENERATED FROM SETUP.PY
 version = '%(version)s'

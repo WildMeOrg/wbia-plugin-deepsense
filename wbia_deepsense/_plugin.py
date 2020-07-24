@@ -82,7 +82,7 @@ def _ibeis_plugin_deepsense_check_container(url):
         if not flag:
             args = (endpoint,)
             print(
-                '[ibeis_deepsense - FAILED CONTAINER ENSURE CHECK] Endpoint %r failed the check'
+                '[wbia_deepsense - FAILED CONTAINER ENSURE CHECK] Endpoint %r failed the check'
                 % args
             )
             print('\tRequired Methods:  %r' % (required_methods,))
@@ -224,7 +224,7 @@ def ibeis_plugin_deepsense_ensure_id_map(ibs, container_name='flukebook_deepsens
     # make sure that the container is online using docker_control functions
     if CONTAINER_ASSET_MAP[container_name]['id_map'] is None:
         fpath = CONTAINER_ASSET_MAP[container_name]['individual_map_fpath']
-        fpath = ut.grab_file_url(fpath, appname='ibeis_deepsense', check_hash=True)
+        fpath = ut.grab_file_url(fpath, appname='wbia_deepsense', check_hash=True)
         csv_obj = ut.CSV.from_fpath(fpath, binary=False)
         CONTAINER_ASSET_MAP[container_name]['id_map'] = dict_from_csv(csv_obj)
     return CONTAINER_ASSET_MAP[container_name]['id_map']
@@ -269,12 +269,12 @@ def ibeis_plugin_deepsense_identify(ibs, annot_uuid, use_depc=True, config={}, *
         annot_uuid  (uuid): Annotation for ID
 
     CommandLine:
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_identify
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_identify:0
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_identify
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_identify:0
 
     Example0:
         >>> # DISABLE_DOCTEST
-        >>> import ibeis_deepsense
+        >>> import wbia_deepsense
         >>> import ibeis
         >>> import utool as ut
         >>> from ibeis.init import sysres
@@ -309,7 +309,7 @@ def ibeis_plugin_deepsense_identify(ibs, annot_uuid, use_depc=True, config={}, *
 
     Example1:
         >>> # DISABLE_DOCTEST
-        >>> import ibeis_deepsense
+        >>> import wbia_deepsense
         >>> import ibeis
         >>> import utool as ut
         >>> from ibeis.init import sysres
@@ -436,12 +436,12 @@ def ibeis_plugin_deepsense_align(ibs, annot_uuid, use_depc=True, config={}, **kw
         annot_uuid  (uuid): Annotation for ID
 
     CommandLine:
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_align
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_align:0
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_align
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_align:0
 
     Example0:
         >>> # ENABLE_DOCTEST
-        >>> import ibeis_deepsense
+        >>> import wbia_deepsense
         >>> import ibeis
         >>> import utool as ut
         >>> from ibeis.init import sysres
@@ -484,12 +484,12 @@ def ibeis_plugin_deepsense_keypoint(ibs, annot_uuid, use_depc=True, config={}, *
         annot_uuid  (uuid): Annotation for ID
 
     CommandLine:
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_keypoint
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_keypoint:0
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_keypoint
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_keypoint:0
 
     Example0:
         >>> # ENABLE_DOCTEST
-        >>> import ibeis_deepsense
+        >>> import wbia_deepsense
         >>> import ibeis
         >>> import utool as ut
         >>> from ibeis.init import sysres
@@ -584,12 +584,12 @@ def ibeis_plugin_deepsense_illustration(
         annot_uuid  (uuid): Annotation for ID
 
     CommandLine:
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_illustration
-        python -m ibeis_deepsense._plugin --test-ibeis_plugin_deepsense_illustration:0
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_illustration
+        python -m wbia_deepsense._plugin --test-ibeis_plugin_deepsense_illustration:0
 
     Example0:
         >>> # ENABLE_DOCTEST
-        >>> import ibeis_deepsense
+        >>> import wbia_deepsense
         >>> import ibeis
         >>> import utool as ut
         >>> from ibeis.init import sysres
@@ -935,11 +935,11 @@ def get_match_results(depc, qaid_list, daid_list, score_list, config):
 class DeepsenseConfig(dt.Config):  # NOQA
     """
     CommandLine:
-        python -m ibeis_deepsense._plugin --test-DeepsenseConfig
+        python -m wbia_deepsense._plugin --test-DeepsenseConfig
 
     Example:
         >>> # ENABLE_DOCTEST
-        >>> from ibeis_deepsense._plugin import *  # NOQA
+        >>> from wbia_deepsense._plugin import *  # NOQA
         >>> config = DeepsenseConfig()
         >>> result = config.get_cfgstr()
         >>> print(result)
@@ -1010,12 +1010,12 @@ class DeepsenseRequest(dt.base.VsOneSimilarityRequest):
 def ibeis_plugin_deepsense(depc, qaid_list, daid_list, config):
     r"""
     CommandLine:
-        python -m ibeis_deepsense._plugin --exec-ibeis_plugin_deepsense
-        python -m ibeis_deepsense._plugin --exec-ibeis_plugin_deepsense:0
+        python -m wbia_deepsense._plugin --exec-ibeis_plugin_deepsense
+        python -m wbia_deepsense._plugin --exec-ibeis_plugin_deepsense:0
 
     Example0:
         >>> # DISABLE_DOCTEST
-        >>> from ibeis_deepsense._plugin import *
+        >>> from wbia_deepsense._plugin import *
         >>> import ibeis
         >>> import itertools as it
         >>> import utool as ut
@@ -1810,7 +1810,7 @@ def update_num_classes_row(rowstr, new_num_classes):
 if __name__ == '__main__':
     r"""
     CommandLine:
-        python -m ibeis_deepsense._plugin --allexamples
+        python -m wbia_deepsense._plugin --allexamples
     """
     import multiprocessing
 

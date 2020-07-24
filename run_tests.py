@@ -9,14 +9,14 @@ def run_tests():
     # Build module list and run tests
     import sys
 
-    ut.change_term_title('RUN ibeis_deepsense TESTS')
+    ut.change_term_title('RUN wbia_deepsense TESTS')
     exclude_doctests_fnames = set([])
     exclude_dirs = [
         '_doc',
         '_page',
         '*.egg-info',
     ]
-    dpath_list = ['ibeis_deepsense']
+    dpath_list = ['wbia_deepsense']
     doctest_modname_list = ut.find_doctestable_modnames(
         dpath_list, exclude_doctests_fnames, exclude_dirs
     )
