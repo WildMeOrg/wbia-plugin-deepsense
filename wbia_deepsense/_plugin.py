@@ -1700,7 +1700,7 @@ def remove_singletons(sorted_name_histogram):
 
 
 def get_next_row_for_subsampling(tgt_count, sorted_histogram, already_sampled_rows):
-    if len(already_sampled_rows) is 0:
+    if len(already_sampled_rows) == 0:
         next_row = 0
     else:
         next_row = already_sampled_rows[-1] + 1
