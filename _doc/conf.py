@@ -8,7 +8,7 @@ import os
 os.environ['IBIES_PARSE_ARGS'] = 'OFF'
 os.environ['UTOOL_AUTOGEN_SPHINX_RUNNING'] = 'ON'
 
-# sys.path.append('~/code/ibeis_deepsense')
+# sys.path.append('~/code/wbia_deepsense')
 sys.path.append(os.path.abspath('../'))
 
 autosummary_generate = True
@@ -31,7 +31,7 @@ html_theme_path = [
 
 # -- Project information -----------------------------------------------------
 
-project = 'ibeis_deepsense'
+project = 'wbia_deepsense'
 copyright = '2019, Wild Me'
 author = 'Drew Blount, Jason Parham'
 
