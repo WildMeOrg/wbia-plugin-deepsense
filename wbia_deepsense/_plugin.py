@@ -7,7 +7,7 @@ from wbia.constants import ANNOTATION_TABLE
 from wbia.web.apis_engine import ensure_uuid_list
 import wbia.constants as const
 import utool as ut
-import dtool as dt
+import wbia.dtool as dt
 import vtool as vt
 import numpy as np
 import base64
@@ -19,7 +19,7 @@ from io import BytesIO
 (print, rrr, profile) = ut.inject2(__name__)
 
 _, register_ibs_method = controller_inject.make_ibs_register_decorator(__name__)
-register_api = controller_inject.get_ibeis_flask_api(__name__)
+register_api = controller_inject.get_wbia_flask_api(__name__)
 register_preproc_annot = controller_inject.register_preprocs['annot']
 
 u"""
