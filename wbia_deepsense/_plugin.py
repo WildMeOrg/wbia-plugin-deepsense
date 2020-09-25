@@ -61,11 +61,11 @@ def _wbia_plugin_deepsense_check_container(url):
     flag_list = []
     endpoint_list = list(endpoints.keys())
     for endpoint in endpoint_list:
-        print('Checking endpoint %r against url %r' % (endpoint, url,))
+        print('Checking endpoint %r against url %r' % (endpoint, url))
         flag = False
         required_methods = set(endpoints[endpoint])
         supported_methods = None
-        url_ = 'http://%s/%s' % (url, endpoint,)
+        url_ = 'http://%s/%s' % (url, endpoint)
 
         try:
             response = requests.options(url_, timeout=1)
@@ -383,7 +383,10 @@ def get_b64_image(ibs, aid, training_config=False, **kwargs):
 def wbia_plugin_deepsense_identify_aid(ibs, aid, config={}, **kwargs):
     url = _deepsense_url_selector(ibs, aid)
     b64_image = ibs.get_b64_image(aid, **config)
-    data = {'image': b64_image, 'configuration': {'top_n': 100, 'threshold': 0.0,}}
+    data = {
+        'image': b64_image,
+        'configuration': {'top_n': 100, 'threshold': 0.0},
+    }
     url = 'http://%s/api/classify' % (url)
     print('Sending identify to %s' % url)
     response = requests.post(url, json=data, timeout=120)
@@ -535,8 +538,7 @@ def deepsense_annot_chip_fpath(ibs, aid, dim_size=DIM_SIZE, **kwargs):
     coverage = annot_area / image_area
     trivial = coverage >= 0.99
     print(
-        '[Deepsense] Trivial config?: %r (area percentage = %0.02f)'
-        % (trivial, coverage,)
+        '[Deepsense] Trivial config?: %r (area percentage = %0.02f)' % (trivial, coverage)
     )
 
     if trivial:
