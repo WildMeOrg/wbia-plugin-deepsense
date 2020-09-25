@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from os.path import abspath, exists, join, dirname, split, splitext
 import wbia
 from wbia.control import controller_inject, docker_control
@@ -16,6 +17,7 @@ from io import BytesIO
 
 
 (print, rrr, profile) = ut.inject2(__name__)
+logger = logging.getLogger()
 
 _, register_ibs_method = controller_inject.make_ibs_register_decorator(__name__)
 register_api = controller_inject.get_wbia_flask_api(__name__)
@@ -60,7 +62,7 @@ def _wbia_plugin_deepsense_check_container(url):
     flag_list = []
     endpoint_list = list(endpoints.keys())
     for endpoint in endpoint_list:
-        print('Checking endpoint %r against url %r' % (endpoint, url))
+        logger.info('Checking endpoint %r against url %r' % (endpoint, url))
         flag = False
         required_methods = set(endpoints[endpoint])
         supported_methods = None
@@ -80,13 +82,13 @@ def _wbia_plugin_deepsense_check_container(url):
                 flag = True
         if not flag:
             args = (endpoint,)
-            print(
+            logger.info(
                 '[wbia_deepsense - FAILED CONTAINER ENSURE CHECK] Endpoint %r failed the check'
                 % args
             )
-            print('\tRequired Methods:  %r' % (required_methods,))
-            print('\tSupported Methods: %r' % (supported_methods,))
-        print('\tFlag: %r' % (flag,))
+            logger.info('\tRequired Methods:  %r' % (required_methods,))
+            logger.info('\tSupported Methods: %r' % (supported_methods,))
+        logger.info('\tFlag: %r' % (flag,))
         flag_list.append(flag)
     supported = np.all(flag_list)
     return supported
@@ -177,7 +179,7 @@ def wbia_plugin_deepsense_id_to_flukebook(ibs, deepsense_id, container_name):
     id_dict = ibs.wbia_plugin_deepsense_ensure_id_map(container_name)
     if deepsense_id not in id_dict:
         # print warning bc we're missing a deepsense_id from our deepsense-flukebook map
-        # print('[WARNING]: deepsense id %s is missing from the deepsense-flukebook ID map .csv' % deepsense_id)
+        # logger.info('[WARNING]: deepsense id %s is missing from the deepsense-flukebook ID map .csv' % deepsense_id)
         return str(deepsense_id)
     ans = id_dict[deepsense_id]
     return ans
@@ -213,7 +215,9 @@ def wbia_plugin_deepsense_ensure_backend(
                 BACKEND_URLS,
                 container_name,
             )
-            print('[WARNING] Multiple BACKEND_URLS:\n\tFound: %r\n\tUsing: %r' % args)
+            logger.info(
+                '[WARNING] Multiple BACKEND_URLS:\n\tFound: %r\n\tUsing: %r' % args
+            )
     return CONTAINER_ASSET_MAP[container_name]['backend_url']
 
 
@@ -387,7 +391,7 @@ def wbia_plugin_deepsense_identify_aid(ibs, aid, config={}, **kwargs):
         'configuration': {'top_n': 100, 'threshold': 0.0},
     }
     url = 'http://%s/api/classify' % (url)
-    print('Sending identify to %s' % url)
+    logger.info('Sending identify to %s' % url)
     response = requests.post(url, json=data, timeout=120)
     assert response.status_code == 200
     response = response.json()
@@ -404,7 +408,7 @@ def wbia_plugin_deepsense_align_aid(ibs, aid, config={}, training_config=False, 
         'image': b64_image,
     }
     url = 'http://%s/api/alignment' % (url)
-    print('Sending alignment to %s' % url)
+    logger.info('Sending alignment to %s' % url)
     response = requests.post(url, json=data, timeout=120)
     assert response.status_code == 200
     return response.json()
@@ -419,7 +423,7 @@ def wbia_plugin_deepsense_keypoint_aid(
     data = alignment_result.copy()
     data['image'] = b64_image
     url = 'http://%s/api/keypoints' % (url)
-    print('Sending keypoints to %s' % url)
+    logger.info('Sending keypoints to %s' % url)
     response = requests.post(url, json=data, timeout=120)
     assert response.status_code == 200
     return response.json()
@@ -536,7 +540,7 @@ def deepsense_annot_chip_fpath(ibs, aid, dim_size=DIM_SIZE, **kwargs):
     annot_area = w_ * h_
     coverage = annot_area / image_area
     trivial = coverage >= 0.99
-    print(
+    logger.info(
         '[Deepsense] Trivial config?: %r (area percentage = %0.02f)' % (trivial, coverage)
     )
 
@@ -553,7 +557,7 @@ def deepsense_annot_chip_fpath(ibs, aid, dim_size=DIM_SIZE, **kwargs):
             'pad': 0.99,
             'ext': '.jpg',
         }
-    print('[Deepsense] Using chip_fpath config = %s' % (ut.repr3(config),))
+    logger.info('[Deepsense] Using chip_fpath config = %s' % (ut.repr3(config),))
 
     fpath = ibs.get_annot_chip_fpath(aid, ensure=True, config2_=config)
     return fpath
@@ -647,7 +651,7 @@ def wbia_plugin_deepsense_illustration(
         ut.ensuredir(output_path)
         output_filepath_fmtstr = join(output_path, 'illustration-%s.jpg')
         output_filepath = output_filepath_fmtstr % (annot_uuid,)
-        print('Writing to %s' % (output_filepath,))
+        logger.info('Writing to %s' % (output_filepath,))
         pil_img.save(output_filepath)
 
     return pil_img
@@ -716,7 +720,7 @@ def wbia_plugin_deepsense_passport(ibs, annot_uuid, output=False, config={}, **k
         ut.ensuredir(output_path)
         output_filepath_fmtstr = join(output_path, 'passport-%s.jpg')
         output_filepath = output_filepath_fmtstr % (annot_uuid,)
-        print('Writing to %s' % (output_filepath,))
+        logger.info('Writing to %s' % (output_filepath,))
         canvas.save(output_filepath)
 
     return canvas
@@ -1088,7 +1092,7 @@ def wbia_plugin_deepsense(depc, qaid_list, daid_list, config):
                     name_score,
                     len(daids),
                 )
-                print(
+                logger.info(
                     'Suggested match name = %r (rank %d) with score = %0.04f is not in the daids (total %d)'
                     % args
                 )
@@ -1137,15 +1141,15 @@ def deepsense_retraining_metadata(ibs, species='Eubalaena australis'):
 
 @register_ibs_method
 def deepsense_retraining_metadata_rotated(ibs, species='Eubalaena australis'):
-    print('getting aids')
+    logger.info('getting aids')
     aid_list = ibs.get_valid_aids(species=species)
-    print('generating metadata')
+    logger.info('generating metadata')
     csv_str = ibs.deepsense_retraining_metadata_list(aid_list)
-    print('converting metadata to dicts')
+    logger.info('converting metadata to dicts')
     csv_dict = csv_string_to_dicts(csv_str)
-    print('rotating those dicts')
+    logger.info('rotating those dicts')
     rotated_dicts = [rotate_row(row) for row in csv_dict]
-    print('back to a string')
+    logger.info('back to a string')
     rotated_str = array_of_dicts_to_csv(rotated_dicts)
     return rotated_str
 
@@ -1196,7 +1200,7 @@ def deepsense_retraining_metadata_list(ibs, aid_list):
 
     # trying this bc don't trust the widths and heights above
     widths = [x2 - x1 for (x1, x2) in zip(bbox1_xs, bbox2_xs)]
-    print('10 widths: %s' % widths[:10])
+    logger.info('10 widths: %s' % widths[:10])
     heights = [y2 - y1 for (y1, y2) in zip(bbox1_ys, bbox2_ys)]
 
     callosities = [0] * num_annots
@@ -1399,13 +1403,13 @@ def deepsense_retraining_metadata_passports(
     # csv_str = ut.make_standard_csv(cleaned_ans, header_row)
 
     csv_str = ut.make_standard_csv(full_ans, header_row)
-    print('converting metadata to dicts')
+    logger.info('converting metadata to dicts')
     csv_dict = ibs.csv_string_to_dicts(csv_str)
     # TODO: want to clean this here or solve nameless things somewhere else?
     # csv_dict = ibs.deepsense_clean_metadata_dict(csv_dict)
-    print('rotating those dicts')
+    logger.info('rotating those dicts')
     rotated_dicts = [rotate_row(row) for row in csv_dict]
-    print('back to a string')
+    logger.info('back to a string')
     rotated_str = ibs.array_of_dicts_to_csv(rotated_dicts)
 
     return rotated_str
@@ -1433,13 +1437,13 @@ def deepsense_clean_csv_metadata_dict(ibs, csv_dict):
 @register_ibs_method
 def heuristically_clean_trainingset(ibs, metadata_dicts):
 
-    print('heuristically_clean_trainingset called on %s rows' % len(metadata_dicts))
+    logger.info('heuristically_clean_trainingset called on %s rows' % len(metadata_dicts))
 
     clean_rows = [row for row in metadata_dicts if good_row_heuristic(row)]
-    print('heuristically_clean_trainingset now has  %s rows' % len(clean_rows))
+    logger.info('heuristically_clean_trainingset now has  %s rows' % len(clean_rows))
     diff = len(metadata_dicts) - len(clean_rows)
     percent = 100 * diff / len(metadata_dicts)
-    print(' we removed %s rows, %s%%' % (diff, percent))
+    logger.info(' we removed %s rows, %s%%' % (diff, percent))
     return clean_rows
 
 
@@ -1521,7 +1525,7 @@ def illustrate_metadata_helper(row, i, imgdir):
 
     ut.ensuredir(imgdir)
     output_filepath = join(imgdir, (str(i) + '.jpg'))
-    print('saving to %s' % output_filepath)
+    logger.info('saving to %s' % output_filepath)
     canvas.save(output_filepath)
     return canvas
 
@@ -1660,18 +1664,22 @@ def subsample_matching_distribution(source_metadata, target_metadata):
 
     initial_target_mean = np.mean(initial_target_sighting_dist)
     initial_target_std = np.std(initial_target_sighting_dist)
-    print(
+    logger.info(
         'Initial Target sighting dist: mean=%2f, std=%2f'
         % (initial_target_mean, initial_target_std)
     )
 
     target_mean = np.mean(target_sighting_dist)
     target_std = np.std(target_sighting_dist)
-    print('Target sighting distribution: mean=%2f, std=%2f' % (target_mean, target_std))
+    logger.info(
+        'Target sighting distribution: mean=%2f, std=%2f' % (target_mean, target_std)
+    )
 
     final_mean = np.mean(final_sighting_dist)
     final_std = np.std(final_sighting_dist)
-    print('Final sighting distribution:  mean=%2f, std=%2f' % (final_mean, final_std))
+    logger.info(
+        'Final sighting distribution:  mean=%2f, std=%2f' % (final_mean, final_std)
+    )
 
     csv_str = array_of_dicts_to_csv(None, subsampled_src)
 
