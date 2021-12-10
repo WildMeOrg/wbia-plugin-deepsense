@@ -23,14 +23,6 @@ _, register_ibs_method = controller_inject.make_ibs_register_decorator(__name__)
 register_api = controller_inject.get_wbia_flask_api(__name__)
 register_preproc_annot = controller_inject.register_preprocs['annot']
 
-u"""
-Interfacing with the ACR from python is a headache, so for now we will assume that
-the docker image has already been downloaded. Command:
-
-docker pull wildme.azurecr.io/ibeis/deepsense:latest
-
-"""
-
 
 DIM_SIZE = 2000
 
@@ -97,7 +89,7 @@ def _wbia_plugin_deepsense_check_container(url):
 docker_control.docker_register_config(
     None,
     'flukebook_deepsense',
-    'wildme.azurecr.io/ibeis/deepsense:latest',
+    'wildme/wbia-plugin-deepsense:latest',
     run_args={'_internal_port': 5000, '_external_suggested_port': 5000},
     container_check_func=_wbia_plugin_deepsense_check_container,
 )
@@ -105,28 +97,28 @@ docker_control.docker_register_config(
 docker_control.docker_register_config(
     None,
     'flukebook_deepsense2',
-    'wildme.azurecr.io/ibeis/deepsense:app2',
+    'wildme/wbia-plugin-deepsense:app2',
     run_args={'_internal_port': 5000, '_external_suggested_port': 5000},
     container_check_func=_wbia_plugin_deepsense_check_container,
 )
 docker_control.docker_register_config(
     None,
     'flukebook_deepsense5',
-    'wildme.azurecr.io/ibeis/deepsense:app5',
+    'wildme/wbia-plugin-deepsense:app5',
     run_args={'_internal_port': 5000, '_external_suggested_port': 5000},
     container_check_func=_wbia_plugin_deepsense_check_container,
 )
 docker_control.docker_register_config(
     None,
     'deepsense_SRW_v1',
-    'wildme.azurecr.io/ibeis/deepsense-srw:latest',
+    'wildme/wbia-plugin-deepsense:srw',
     run_args={'_internal_port': 5000, '_external_suggested_port': 5000},
     container_check_func=_wbia_plugin_deepsense_check_container,
 )
 docker_control.docker_register_config(
     None,
     'original_deepsense',
-    'wildme.azurecr.io/ibeis/deepsense-original:latest',
+    'wildme/wbia-plugin-deepsense:original',
     run_args={'_internal_port': 5000, '_external_suggested_port': 5000},
     container_check_func=_wbia_plugin_deepsense_check_container,
 )
@@ -275,7 +267,7 @@ def wbia_plugin_deepsense_identify(ibs, annot_uuid, use_depc=True, config={}, **
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_identify
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_identify:0
 
-    Example0:
+    Example:
         >>> # DISABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
@@ -443,7 +435,7 @@ def wbia_plugin_deepsense_align(ibs, annot_uuid, use_depc=True, config={}, **kwa
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_align
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_align:0
 
-    Example0:
+    Example:
         >>> # ENABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
@@ -491,7 +483,7 @@ def wbia_plugin_deepsense_keypoint(ibs, annot_uuid, use_depc=True, config={}, **
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_keypoint
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_keypoint:0
 
-    Example0:
+    Example:
         >>> # ENABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
@@ -590,7 +582,7 @@ def wbia_plugin_deepsense_illustration(
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_illustration
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_illustration:0
 
-    Example0:
+    Example:
         >>> # ENABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
@@ -892,7 +884,7 @@ def wbia_plugin_deepsense_passport_deepsense_ids_depc(depc, aid_list, config):
 
 
 def get_match_results(depc, qaid_list, daid_list, score_list, config):
-    """ converts table results into format for ipython notebook """
+    """converts table results into format for ipython notebook"""
     # qaid_list, daid_list = request.get_parent_rowids()
     # score_list = request.score_list
     # config = request.config
@@ -1017,7 +1009,7 @@ def wbia_plugin_deepsense(depc, qaid_list, daid_list, config):
         python -m wbia_deepsense._plugin --exec-wbia_plugin_deepsense
         python -m wbia_deepsense._plugin --exec-wbia_plugin_deepsense:0
 
-    Example0:
+    Example:
         >>> # DISABLE_DOCTEST
         >>> from wbia_deepsense._plugin import *
         >>> import wbia

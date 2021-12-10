@@ -1,11 +1,11 @@
-ibeis\_deepsense package
-==============================================
+wbia\_deepsense package
+=======================
 
 Submodules
 ----------
 
-ibeis\_deepsense.\_plugin module
-------------------------------------------------------
+wbia\_deepsense.\_plugin module
+-------------------------------
 
 .. automodule:: wbia_deepsense._plugin
     :members:
