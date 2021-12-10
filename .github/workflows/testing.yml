@@ -62,6 +62,10 @@ jobs:
       - name: Download plugin Docker image
         run: |
           docker pull wildme/wbia-plugin-deepsense:latest
+          docker pull wildme/wbia-plugin-deepsense:app2
+          docker pull wildme/wbia-plugin-deepsense:app5
+          docker pull wildme/wbia-plugin-deepsense:srw
+          docker pull wildme/wbia-plugin-deepsense:original
 
       - name: Test project
         run: |
