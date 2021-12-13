@@ -15,3 +15,5 @@ _output/
 
 docs/
 _docs/_build/
+
+wbia_deepsense/_version.py

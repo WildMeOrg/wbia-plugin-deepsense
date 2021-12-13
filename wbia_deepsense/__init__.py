@@ -1,3 +1,7 @@
 # -*- coding: utf-8 -*-
-from wbia_deepsense.version import version as __version__  # NOQA
+try:
+    from wbia_deepsense._version import __version__
+except ImportError:
+    __version__ = '0.0.0'
+
 from wbia_deepsense import _plugin  # NOQA

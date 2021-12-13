@@ -16,7 +16,6 @@ from PIL import Image, ImageDraw
 from io import BytesIO
 
 
-(print, rrr, profile) = ut.inject2(__name__)
 logger = logging.getLogger()
 
 _, register_ibs_method = controller_inject.make_ibs_register_decorator(__name__)
@@ -288,7 +287,7 @@ def wbia_plugin_deepsense_identify(ibs, annot_uuid, use_depc=True, config={}, **
         >>>     rank, score = ibs._wbia_plugin_deepsense_rank(resp_json, annot_name)
         >>>     print('[instant] for whale id = %s, got rank %d with score %0.04f' % (annot_name, rank, score, ))
         >>>     rank_list.append(rank)
-            >>>     score_list.append('%0.04f' % score)
+        >>>     score_list.append('%0.04f' % score)
         >>> response_list = ibs.depc_annot.get('DeepsenseIdentification', aid_list, 'response')
         >>> rank_list_cache = []
         >>> score_list_cache = []
@@ -300,9 +299,10 @@ def wbia_plugin_deepsense_identify(ibs, annot_uuid, use_depc=True, config={}, **
         >>> assert rank_list == rank_list_cache
         >>> # assert score_list == score_list_cache
         >>> result = (rank_list, score_list)
+        >>> print(result)
         ([0, -1, -1, 0], ['0.9052', '-1.0000', '-1.0000', '0.6986'])
 
-    Example1:
+    Example:
         >>> # DISABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
@@ -337,6 +337,7 @@ def wbia_plugin_deepsense_identify(ibs, annot_uuid, use_depc=True, config={}, **
         >>> print(np.mean(score_list))
         >>> print(np.std(score_list))
         >>> result = (rank_list, score_list)
+        print(result)
         ([0, -1, -1, 0], ['0.9052', '-1.0000', '-1.0000', '0.6986'])
     """
     aid = aid_from_annot_uuid(ibs, annot_uuid)
@@ -454,7 +455,8 @@ def wbia_plugin_deepsense_align(ibs, annot_uuid, use_depc=True, config={}, **kwa
         >>>     aligns_list.append(resp_json)
         >>> aligns_list_cache = ibs.depc_annot.get('DeepsenseAlignment', aid_list, 'response')
         >>> assert aligns_list == aligns_list_cache
-        >>> result = aligns_list_cache
+        >>> aligns_list_cache
+        >>> print(result)
         [{'localization': {'bbox1': {'x': 994, 'y': 612}, 'bbox2': {'x': 1511, 'y': 1160}}}, {'localization': {'bbox1': {'x': 0, 'y': 408}, 'bbox2': {'x': 1128, 'y': 727}}}, {'localization': {'bbox1': {'x': 2376, 'y': 404}, 'bbox2': {'x': 3681, 'y': 1069}}}, {'localization': {'bbox1': {'x': 822, 'y': 408}, 'bbox2': {'x': 1358, 'y': 956}}}]
     """
     aid = aid_from_annot_uuid(ibs, annot_uuid)
@@ -503,6 +505,7 @@ def wbia_plugin_deepsense_keypoint(ibs, annot_uuid, use_depc=True, config={}, **
         >>> viewpoint_list_cache = ibs.depc_annot.get('DeepsenseKeypoint', aid_list, 'response')
         >>> assert viewpoint_list == viewpoint_list_cache
         >>> result = viewpoint_list_cache
+        >>> print(result)
         [{'keypoints': {'blowhead': {'x': 1357, 'y': 963}, 'bonnet': {'x': 1151, 'y': 804}, 'angle': -142.33743653326957}}, {'keypoints': {'blowhead': {'x': 0, 'y': 724}, 'bonnet': {'x': 757, 'y': 477}, 'angle': -18.070882049942213}}, {'keypoints': {'blowhead': {'x': 3497, 'y': 404}, 'bonnet': {'x': 2875, 'y': 518}, 'angle': -190.38588712124752}}, {'keypoints': {'blowhead': {'x': 1098, 'y': 784}, 'bonnet': {'x': 1115, 'y': 523}, 'angle': -86.27335507676072}}]
 
     """
@@ -583,7 +586,7 @@ def wbia_plugin_deepsense_illustration(
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_illustration:0
 
     Example:
-        >>> # ENABLE_DOCTEST
+        >>> # DISABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
         >>> import utool as ut
@@ -933,7 +936,7 @@ class DeepsenseConfig(dt.Config):  # NOQA
         python -m wbia_deepsense._plugin --test-DeepsenseConfig
 
     Example:
-        >>> # ENABLE_DOCTEST
+        >>> # DISABLE_DOCTEST
         >>> from wbia_deepsense._plugin import *  # NOQA
         >>> config = DeepsenseConfig()
         >>> result = config.get_cfgstr()
@@ -1010,7 +1013,7 @@ def wbia_plugin_deepsense(depc, qaid_list, daid_list, config):
         python -m wbia_deepsense._plugin --exec-wbia_plugin_deepsense:0
 
     Example:
-        >>> # DISABLE_DOCTEST
+        >>> # ENABLE_DOCTEST
         >>> from wbia_deepsense._plugin import *
         >>> import wbia
         >>> import itertools as it
@@ -1042,6 +1045,7 @@ def wbia_plugin_deepsense(depc, qaid_list, daid_list, config):
         >>> name_score_dict = dict(zip(unique_name_text_list, name_score_list_))
         >>> print('Queried Deepsense algorithm for ground-truth ID = %s' % (qannot_name, ))
         >>> result = ut.repr3(name_score_dict)
+        >>> print(result)
         {
             '64edec9a-b998-4f96-a9d6-6dddcb8f8c0a': '0.8082',
             '825c5de0-d764-464c-91b6-9e507c5502fd': '0.0000',
