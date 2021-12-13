@@ -437,7 +437,7 @@ def wbia_plugin_deepsense_align(ibs, annot_uuid, use_depc=True, config={}, **kwa
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_align:0
 
     Example:
-        >>> # ENABLE_DOCTEST
+        >>> # DISABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
         >>> import utool as ut
@@ -486,7 +486,7 @@ def wbia_plugin_deepsense_keypoint(ibs, annot_uuid, use_depc=True, config={}, **
         python -m wbia_deepsense._plugin --test-wbia_plugin_deepsense_keypoint:0
 
     Example:
-        >>> # ENABLE_DOCTEST
+        >>> # DISABLE_DOCTEST
         >>> import wbia_deepsense
         >>> import wbia
         >>> import utool as ut
@@ -1013,7 +1013,7 @@ def wbia_plugin_deepsense(depc, qaid_list, daid_list, config):
         python -m wbia_deepsense._plugin --exec-wbia_plugin_deepsense:0
 
     Example:
-        >>> # ENABLE_DOCTEST
+        >>> # DISABLE_DOCTEST
         >>> from wbia_deepsense._plugin import *
         >>> import wbia
         >>> import itertools as it
